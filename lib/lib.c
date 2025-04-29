@@ -7,7 +7,7 @@ struct termios canonConfig;
 /* Function */
 
 int Append (struct Buffer* buf, const char* str, int len)
-{	
+{
 	char* newStr = realloc(buf->buf, buf->len + len);
 	if (newStr == NULL) return -1;
 
@@ -66,8 +66,9 @@ void Free (struct Buffer* buf)
 
 void Error (const char* error)
 {
-	write(STDOUT_FILENO, "\x1b[2J", 4);
-  	write(STDOUT_FILENO, "\x1b[H", 3);
+	ssize_t __attribute__((unused)) ignored;
+	ignored = write(STDOUT_FILENO, "\x1b[2J", 4);
+  	ignored = write(STDOUT_FILENO, "\x1b[H", 3);
 	perror(error);
 	exit(EXIT_FAILURE);
 }
